@@ -6,6 +6,7 @@ const[team, setTeam] = useState([])
 const[money, setMoney] = useState(100)
 const[zombieFighters, isZombieFighters] = useState([
   {
+    id: 1,
     name: 'Survivor',
     price: 12,
     strength: 6,
@@ -13,6 +14,7 @@ const[zombieFighters, isZombieFighters] = useState([
     img: 'https://via.placeholder.com/150/92c952',
   },
   {
+    id: 2,
     name: 'Scavenger',
     price: 10,
     strength: 5,
@@ -20,6 +22,7 @@ const[zombieFighters, isZombieFighters] = useState([
     img: 'https://via.placeholder.com/150/771796',
   },
   {
+    id: 3,
     name: 'Shadow',
     price: 18,
     strength: 7,
@@ -27,6 +30,7 @@ const[zombieFighters, isZombieFighters] = useState([
     img: 'https://via.placeholder.com/150/24f355',
   },
   {
+    id: 4,
     name: 'Tracker',
     price: 14,
     strength: 7,
@@ -34,6 +38,7 @@ const[zombieFighters, isZombieFighters] = useState([
     img: 'https://via.placeholder.com/150/d32776',
   },
   {
+    id: 5,
     name: 'Sharpshooter',
     price: 20,
     strength: 6,
@@ -41,6 +46,7 @@ const[zombieFighters, isZombieFighters] = useState([
     img: 'https://via.placeholder.com/150/1ee8a4',
   },
   {
+    id: 6,
     name: 'Medic',
     price: 15,
     strength: 5,
@@ -48,6 +54,7 @@ const[zombieFighters, isZombieFighters] = useState([
     img: 'https://via.placeholder.com/150/66b7d2',
   },
   {
+    id: 7,
     name: 'Engineer',
     price: 16,
     strength: 6,
@@ -55,6 +62,7 @@ const[zombieFighters, isZombieFighters] = useState([
     img: 'https://via.placeholder.com/150/56acb2',
   },
   {
+    id: 8,
     name: 'Brawler',
     price: 11,
     strength: 8,
@@ -62,6 +70,7 @@ const[zombieFighters, isZombieFighters] = useState([
     img: 'https://via.placeholder.com/150/8985dc',
   },
   {
+    id: 9,
     name: 'Infiltrator',
     price: 17,
     strength: 5,
@@ -69,6 +78,7 @@ const[zombieFighters, isZombieFighters] = useState([
     img: 'https://via.placeholder.com/150/392537',
   },
   {
+    id: 10,
     name: 'Leader',
     price: 22,
     strength: 7,
@@ -76,6 +86,7 @@ const[zombieFighters, isZombieFighters] = useState([
     img: 'https://via.placeholder.com/150/602b9e',
   },
 ])
+
 const[totalStrength, setStrength] = useState(0)
 const[totalAgility, setAgility]= useState(0)
 const handleAddFighter = (newFighter) => {
@@ -87,16 +98,20 @@ const handleAddFighter = (newFighter) => {
     setMoney(newBalance)
     setStrength(teamStrength)
     setAgility(teamAgility)
-    setTeam([...team, newFighter])
+    const fighterInstance = {
+      ...newFighter,
+      instanceId: Math.random()
+    }
+    setTeam([...team, fighterInstance])
    } else {
     console.log("not enough money")
   }
 }
 const handleRemoveFighter = (existingFighter) => {
-  const fighterExists = team.some((fighter) => fighter.id === existingFighter.id)
+  const fighterExists = team.some((fighter) => fighter.instanceId === existingFighter.instanceId)
   console.log(team)
   if (fighterExists) {
-    const newTeam = team.filter((fighter) => fighter.id !== existingFighter.id)
+    const newTeam = team.filter((fighter) => fighter.instanceId !== existingFighter.instanceId)
     const teamStrength = totalStrength - existingFighter.strength
     const teamAgility = totalAgility - existingFighter.agility
     const newBalance = money + existingFighter.price
@@ -136,7 +151,7 @@ const handleRemoveFighter = (existingFighter) => {
       {team.map((fighter) => (
      
         
-      <ul key={fighter.name}>
+      <ul key={fighter.instanceId}>
       <li>{fighter.img}</li>
       <li>{fighter.name}</li>
       <li>Price: {fighter.price}</li>
